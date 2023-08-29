@@ -1,5 +1,5 @@
 package codigo;
-//
+
 public enum Tokens {
     Reservadas,
     Asignacion,

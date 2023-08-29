@@ -16,7 +16,7 @@ Sig = [\,\'\;\.\?\¿\!\¡\#\$\-]
     public String lexeme;
 %}
 %%
-int | if | else | this | do | for | switch | break | void | import | main |
+int | if | else | this | do | for | switch | break | void | import | main | exception |
 false | true | private | protected | class | try | catch | while | return {lexeme=yytext(); return Reservadas;}
 
 "&&" | "||" | "&" | "|" {lexeme=yytext(); return Logico;}
