@@ -6,47 +6,56 @@ import static codigo.Tokens.*;
 Letra = [a-zA-Z]+
 Digito = [0-9]+
 Espacio = [ \t\f|\r|\n|\r\n]
-Op = [\+\-\*\/\%\^]
-Compar = [\>\<]
-Dec = [0-9]+(\.[0-9]+)
-Delimit = [\(\)\{\}\[\]]
 Caden = [\"][^\"]*[\"]
+Dec = [0-9]+(\.[0-9]+)
+Op = [\+\-\*\/\^]
+Compar = [\>\<]
+Delimit = [\(\)\{\}\[\]]
 Sig = [\,\'\;\.\?\¿\!\¡\#\$\-]
 %{
     public String lexeme;
 %}
 %%
-int | if | else | this | do | for | switch | break | void | import | main | exception |
-false | true | private | protected | class | try | catch | while | return {lexeme=yytext(); return Reservadas;}
 
-"&&" | "||" | "&" | "|" {lexeme=yytext(); return Logico;}
-
-"+=" | "-=" | "*=" | "/=" | "%=" | "^=" {lexeme=yytext(); return Combinado;}
+"--#".*"--#" {/*Ignore*/}
 
 {Espacio} {/*Ignore*/}
 
-"//".* {/*Ignore*/}
+{Caden} {lexeme=yytext(); return Texto;}
 
-"++" {lexeme=yytext(); return Incremento;}
-
-"--" {lexeme=yytext(); return Decremento;}
-
-"=" {lexeme=yytext(); return Asignacion;}
-
-"==" | "<=" | ">=" | "<>" | "!=" | {Compar} {lexeme=yytext(); return Relacional;}
-
-{Op} {lexeme=yytext(); return Operador;}
-
-{Letra}({Letra}|{Digito})* {lexeme=yytext(); return Identificador;}
-
-("(-"{Digito}+")")|{Digito}+ {lexeme=yytext(); return Entero;}
+("-"{Digito}+)|{Digito}+ {lexeme=yytext(); return Entero;}
 
 {Dec} {lexeme=yytext(); return Decimal;}
 
+true | false {lexeme=yytext(); return Booleano;}
+
+"establish " {Letra}({Letra}|{Digito})* ("_" {Letra}({Letra}|{Digito})*)* {lexeme=yytext().substring(10); return Variable;}
+
+"establish" | "establish " {Letra}({Letra}|{Digito})* {lexeme=yytext().split(" ")[0]; return Reservadas;}
+
+"power on" | "switch on" | "show:" | read | check | probe | unlike | repeat | 
+until {lexeme=yytext(); return Reservadas;}
+
+{Op} {lexeme=yytext(); return Operador;}
+
+"INC" {lexeme=yytext(); return Incremento;}
+
+"RED" {lexeme=yytext(); return Decremento;}
+
+"NOT" {lexeme=yytext(); return Inversion;}
+
+":=" {lexeme=yytext(); return Asignacion;}
+
+"+|" | "-|" | "*|" | "/|" | "^|" {lexeme=yytext(); return Combinado;}
+
+"=" | "<=" | ">=" | "!=" | {Compar} {lexeme=yytext(); return Relacional;}
+
+"AND" | "OR" | "&" | "|" {lexeme=yytext(); return Logico;}
+
+"%" {lexeme=yytext(); return Concatenacion;}
+
 {Delimit} {lexeme=yytext(); return Delimitador;}
 
-{Caden} {lexeme=yytext(); return Cadena;}
-
-"_" | {Sig} {lexeme=yytext(); return Signo;}
+{Digito}* "<>" | "<" {Caden}+ (,(" ")*{Caden}+)* ">" | "<" {Digito}* ">" {lexeme=yytext(); return Arreglo;}
 
  . {lexeme=yytext(); return ERROR;}

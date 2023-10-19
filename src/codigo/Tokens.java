@@ -1,19 +1,22 @@
 package codigo;
-
+//
 public enum Tokens {
-    Reservadas,
-    Asignacion,
-    Operador,
-    Identificador,
-    Entero,
-    Delimitador,
+    Texto,
     Decimal,
-    Cadena,
-    Signo,
-    Logico,
+    Entero,
+    Booleano,
+    Variable,
+    Reservadas,
+    Operador,
     Incremento,
     Decremento,
-    Relacional,
+    Inversion,
+    Asignacion,
     Combinado,
+    Relacional,
+    Logico,
+    Concatenacion,
+    Delimitador,
+    Arreglo,
     ERROR
 }

@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
@@ -16,6 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JFileChooser;
 
 
 public class Frame extends javax.swing.JFrame {
@@ -30,7 +32,7 @@ public class Frame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/analisis-lexico.png")));
         
-        btnAnalizar.setBackground(new Color(255,255,255));
+        btnArchivo.setBackground(new Color(255,255,255));
         btnLimpiar.setBackground(new Color(255,255,255));
         
         tablaAnalisis.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -45,7 +47,7 @@ public class Frame extends javax.swing.JFrame {
     private void initComponents() {
 
         panelPrincipal = new javax.swing.JPanel();
-        btnAnalizar = new javax.swing.JButton();
+        btnArchivo = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         lblTitulo2 = new javax.swing.JLabel();
         lblTitulo1 = new javax.swing.JLabel();
@@ -53,6 +55,8 @@ public class Frame extends javax.swing.JFrame {
         tablaAnalisis = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtCadena = new javax.swing.JTextArea();
+        btnAnalizar = new javax.swing.JButton();
+        btnArchivo1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Analizador léxico");
@@ -63,15 +67,15 @@ public class Frame extends javax.swing.JFrame {
         panelPrincipal.setBackground(new java.awt.Color(204, 204, 255));
         panelPrincipal.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204)));
 
-        btnAnalizar.setBackground(new java.awt.Color(204, 204, 204));
-        btnAnalizar.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        btnAnalizar.setText("ANALIZAR");
-        btnAnalizar.setToolTipText("Generar tokens, lexemas y patrones");
-        btnAnalizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204), new java.awt.Color(51, 51, 51), new java.awt.Color(102, 102, 102)));
-        btnAnalizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAnalizar.addActionListener(new java.awt.event.ActionListener() {
+        btnArchivo.setBackground(new java.awt.Color(204, 204, 204));
+        btnArchivo.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        btnArchivo.setText("ARCHIVO");
+        btnArchivo.setToolTipText("Generar tokens, lexemas y patrones");
+        btnArchivo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204), new java.awt.Color(51, 51, 51), new java.awt.Color(102, 102, 102)));
+        btnArchivo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAnalizarActionPerformed(evt);
+                btnArchivoActionPerformed(evt);
             }
         });
 
@@ -131,6 +135,30 @@ public class Frame extends javax.swing.JFrame {
         txtCadena.setSelectionColor(new java.awt.Color(204, 204, 255));
         jScrollPane1.setViewportView(txtCadena);
 
+        btnAnalizar.setBackground(new java.awt.Color(204, 204, 204));
+        btnAnalizar.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        btnAnalizar.setText("ANALIZAR");
+        btnAnalizar.setToolTipText("Generar tokens, lexemas y patrones");
+        btnAnalizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204), new java.awt.Color(51, 51, 51), new java.awt.Color(102, 102, 102)));
+        btnAnalizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAnalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnalizarActionPerformed(evt);
+            }
+        });
+
+        btnArchivo1.setBackground(new java.awt.Color(204, 204, 204));
+        btnArchivo1.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        btnArchivo1.setText("GUARDAR");
+        btnArchivo1.setToolTipText("Generar tokens, lexemas y patrones");
+        btnArchivo1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204), new java.awt.Color(51, 51, 51), new java.awt.Color(102, 102, 102)));
+        btnArchivo1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnArchivo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArchivo1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
@@ -143,16 +171,19 @@ public class Frame extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addComponent(btnArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(98, 98, 98)
+                                .addComponent(btnArchivo1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnAnalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(122, 122, 122)
+                                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelPrincipalLayout.createSequentialGroup()
                                 .addComponent(lblTitulo1)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelPrincipalLayout.createSequentialGroup()
-                                .addComponent(jScrollPane1)
-                                .addGap(18, 18, 18)
-                                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnAnalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(35, 35, 35))))
         );
         panelPrincipalLayout.setVerticalGroup(
@@ -161,16 +192,17 @@ public class Frame extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(lblTitulo1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addComponent(btnAnalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAnalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnArchivo1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addComponent(lblTitulo2)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
 
@@ -188,6 +220,37 @@ public class Frame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchivoActionPerformed
+    JFileChooser fileChooser = new JFileChooser();
+    int seleccion = fileChooser.showOpenDialog(this);
+    
+    if (seleccion == JFileChooser.APPROVE_OPTION) {
+    // Obtener el archivo seleccionado
+    java.io.File archivo = fileChooser.getSelectedFile();
+
+    // Leer el contenido del archivo y mostrarlo en la caja de texto
+    try {
+        java.util.Scanner scanner = new java.util.Scanner(archivo);
+        StringBuilder contenido = new StringBuilder();
+        
+        while (scanner.hasNextLine()) {
+            contenido.append(scanner.nextLine()).append("\n");
+        }
+        
+        scanner.close();
+        
+        txtCadena.setText(contenido.toString());
+    } catch (java.io.FileNotFoundException e) {
+        e.printStackTrace();
+    }
+    }
+    }//GEN-LAST:event_btnArchivoActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        vaciarTabla(tablaAnalisis, modelo);
+        txtCadena.setText("");
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
     private void btnAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizarActionPerformed
         if (txtCadena.getText().equals("")){
             //Ventana de aviso que informa que los campos no han sido rellenados
@@ -199,10 +262,26 @@ public class Frame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAnalizarActionPerformed
 
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        vaciarTabla(tablaAnalisis, modelo);
-        txtCadena.setText("");
-    }//GEN-LAST:event_btnLimpiarActionPerformed
+    private void btnArchivo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchivo1ActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        int seleccion = fileChooser.showSaveDialog(this);
+
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            try {
+                // Obtener el archivo seleccionado
+                File archivo = fileChooser.getSelectedFile();
+                // Escribir el contenido de la caja de texto en el archivo
+                FileWriter writer = new FileWriter(archivo);
+                writer.write(txtCadena.getText());
+                writer.close();
+                // Mensaje de confirmación
+                JOptionPane.showMessageDialog(this, "Archivo guardado", "Guardado", JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar guardar el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnArchivo1ActionPerformed
 
     //Método para vaciar la tabla
     public void vaciarTabla(JTable tabla, DefaultTableModel modelo) {
@@ -257,12 +336,7 @@ public class Frame extends javax.swing.JFrame {
                     case ERROR:
                         lexema = lexer.lexeme;
                         componente = tokens.toString();
-                        patron = "Simbolo no definido";
-                        break;
-                    case Identificador: 
-                        lexema = lexer.lexeme;
-                        componente = tokens.toString();
-                        patron = "[a-zA-Z]+[a-zA-Z]+[0-9]+";
+                        patron = "ERROR: Simbolo no definido";
                         break;
                     case Entero:
                         lexema = lexer.lexeme;
@@ -274,17 +348,22 @@ public class Frame extends javax.swing.JFrame {
                         componente = tokens.toString();
                         patron = "[0-9]+(.[0-9]+)";
                         break;
-                    case Cadena:
+                    case Texto:
                         lexema = lexer.lexeme;
                         componente = tokens.toString();
                         patron = "\" [^\"] \"";
                         break;
-                    case Reservadas: 
+                    case Booleano:
                         lexema = lexer.lexeme;
                         componente = tokens.toString();
                         patron = lexer.lexeme;
                         break;
-                    case Asignacion:
+                    case Variable: 
+                        lexema = lexer.lexeme;
+                        componente = tokens.toString();
+                        patron = "[a-zA-Z]+[a-zA-Z]+[0-9]+";
+                        break;
+                    case Reservadas: 
                         lexema = lexer.lexeme;
                         componente = tokens.toString();
                         patron = lexer.lexeme;
@@ -304,6 +383,78 @@ public class Frame extends javax.swing.JFrame {
                             componente = tokens.toString() + " potencia";
                         }
                         break;
+                    case Incremento:
+                        lexema = lexer.lexeme;
+                        componente = tokens.toString();
+                        patron = lexer.lexeme;
+                        break;
+                    case Decremento:
+                        lexema = lexer.lexeme;
+                        componente = tokens.toString();
+                        patron = lexer.lexeme;
+                        break;
+                    case Inversion:
+                        lexema = lexer.lexeme;
+                        componente = tokens.toString();
+                        patron = lexer.lexeme;
+                        break;
+                    case Asignacion:
+                        lexema = lexer.lexeme;
+                        componente = tokens.toString();
+                        patron = lexer.lexeme;
+                        break;
+                    case Combinado:
+                        lexema = lexer.lexeme;
+                        patron = "+| | -| | /| | *| | ^|";
+                        if(lexema.equals("+|")){
+                            componente = "Suma " + tokens.toString();
+                        } else if(lexema.equals("-|")){
+                            componente = "Resta " + tokens.toString();
+                        } else if(lexema.equals("/|")){
+                            componente = "Division " + tokens.toString();
+                        } else if(lexema.equals("*|")){
+                            componente = "Multiplicacion " + tokens.toString();
+                        } else {
+                            componente = "Potencia " + tokens.toString();
+                        }
+                        break;
+                    case Relacional:
+                        lexema = lexer.lexeme;
+                        patron = ">  |  <  |  ==  |  <=  |  >=  |  !=";
+                        if(lexema.equals(">")){
+                            componente = tokens.toString() + " mayor que";
+                        } else if(lexema.equals("<")){
+                            componente = tokens.toString() + " menor que";
+                        } else if(lexema.equals("==")){
+                            componente = tokens.toString() + " igual a";
+                        } else if(lexema.equals("<=")){
+                            componente = tokens.toString() + " menor o igual que";
+                        } else if(lexema.equals(">=")){
+                            componente = tokens.toString() + " mayor o igual que";
+                        } else if(lexema.equals("!=")){
+                            componente = tokens.toString() + " no igual a";
+                        } else {
+                            componente = tokens.toString();
+                        }
+                        break;
+                    case Logico:
+                        lexema = lexer.lexeme;
+                        patron = "&&  |  ||  |  &  |  |";
+                        if(lexema.equals("&&")){
+                            componente = tokens.toString() + " AND";
+                        } else if(lexema.equals("||")){
+                            componente = tokens.toString() + " OR";
+                        } else if(lexema.equals("&")){
+                            componente = tokens.toString() + " AND Binario";
+                        } else {
+                            componente = tokens.toString() + " OR Binario";
+                        }
+                        break;
+                    case Concatenacion:
+                        lexema = lexer.lexeme;
+                        componente = tokens.toString();
+                        patron = lexer.lexeme;
+                        break;
                     case Delimitador:
                         lexema = lexer.lexeme;
                         patron = "(  |  )  |  {  |  }  |  [  |  ]";
@@ -321,92 +472,40 @@ public class Frame extends javax.swing.JFrame {
                             componente = tokens.toString() + " cerrar corchete";
                         }
                         break;
-                    case Signo:
-                        lexema = lexer.lexeme;
-                        patron = "'  |  ; |  .  |  ,  |  ?  |  ¿  |  !  |  ¡  |  #  |  $  |  -  |  _";
-                        if(lexema.equals("'")){
-                            componente = tokens.toString() + " comilla";
-                        } else if(lexema.equals(";")){
-                            componente = tokens.toString() + " punto y coma";
-                        } else if(lexema.equals(".")){
-                            componente = tokens.toString() + " punto";
-                        } else if(lexema.equals(",")){
-                            componente = tokens.toString() + " coma";
-                        } else if(lexema.equals("?")){
-                            componente = tokens.toString() + " cerrar interrogacion";
-                        } else if(lexema.equals("¿")){
-                            componente = tokens.toString() + " abrir interrogacion";
-                        } else if(lexema.equals("!")){
-                            componente = tokens.toString() + " cerrar exclamacion";
-                        } else if(lexema.equals("¡")){
-                            componente = tokens.toString() + " abrir exclamacion";
-                        } else if(lexema.equals("#")){
-                            componente = tokens.toString() + " numeral";
-                        } else if(lexema.equals("$")){
-                            componente = tokens.toString() + " peso";
-                        } else if(lexema.equals("-")){
-                            componente = tokens.toString() + " guion";
-                        } else {
-                            componente = tokens.toString() + " guion bajo";
-                        }
-                        break;
-                    case Logico:
-                        lexema = lexer.lexeme;
-                        patron = "&&  |  ||  |  &  |  |";
-                        if(lexema.equals("&&")){
-                            componente = tokens.toString() + " AND";
-                        } else if(lexema.equals("||")){
-                            componente = tokens.toString() + " OR";
-                        } else if(lexema.equals("&")){
-                            componente = tokens.toString() + " AND Binario";
-                        } else {
-                            componente = tokens.toString() + " OR Binario";
-                        }
-                        break;
-                    case Incremento:
+                    case Arreglo:
                         lexema = lexer.lexeme;
                         componente = tokens.toString();
                         patron = lexer.lexeme;
                         break;
-                    case Decremento:
-                        lexema = lexer.lexeme;
-                        componente = tokens.toString();
-                        patron = lexer.lexeme;
-                        break;
-                    case Relacional:
-                        lexema = lexer.lexeme;
-                        patron = ">  |  <  |  ==  |  <=  |  >=  |  <>  |  !=";
-                        if(lexema.equals(">")){
-                            componente = tokens.toString() + " mayor que";
-                        } else if(lexema.equals("<")){
-                            componente = tokens.toString() + " menor que";
-                        } else if(lexema.equals("==")){
-                            componente = tokens.toString() + " igual a";
-                        } else if(lexema.equals("<=")){
-                            componente = tokens.toString() + " menor o igual que";
-                        } else if(lexema.equals(">=")){
-                            componente = tokens.toString() + " mayor o igual que";
-                        } else if(lexema.equals("!=")){
-                            componente = tokens.toString() + " no igual a";
-                        } else {
-                            componente = tokens.toString();
-                        }
-                        break;
-                    case Combinado:
-                        lexema = lexer.lexeme;
-                        patron = "+= | -= | /= | *= | ^=";
-                        if(lexema.equals("+=")){
-                            componente = "Suma " + tokens.toString();
-                        } else if(lexema.equals("-=")){
-                            componente = "Resta " + tokens.toString();
-                        } else if(lexema.equals("/=")){
-                            componente = "Division " + tokens.toString();
-                        } else if(lexema.equals("*=")){
-                            componente = "Multiplicacion " + tokens.toString();
-                        } else {
-                            componente = "Potencia " + tokens.toString();
-                        }
-                        break;
+//                    case Signo:
+//                        lexema = lexer.lexeme;
+//                        patron = "'  |  ; |  .  |  ,  |  ?  |  ¿  |  !  |  ¡  |  #  |  $  |  -  |  _";
+//                        if(lexema.equals("'")){
+//                            componente = tokens.toString() + " comilla";
+//                        } else if(lexema.equals(";")){
+//                            componente = tokens.toString() + " punto y coma";
+//                        } else if(lexema.equals(".")){
+//                            componente = tokens.toString() + " punto";
+//                        } else if(lexema.equals(",")){
+//                            componente = tokens.toString() + " coma";
+//                        } else if(lexema.equals("?")){
+//                            componente = tokens.toString() + " cerrar interrogacion";
+//                        } else if(lexema.equals("¿")){
+//                            componente = tokens.toString() + " abrir interrogacion";
+//                        } else if(lexema.equals("!")){
+//                            componente = tokens.toString() + " cerrar exclamacion";
+//                        } else if(lexema.equals("¡")){
+//                            componente = tokens.toString() + " abrir exclamacion";
+//                        } else if(lexema.equals("#")){
+//                            componente = tokens.toString() + " numeral";
+//                        } else if(lexema.equals("$")){
+//                            componente = tokens.toString() + " peso";
+//                        } else if(lexema.equals("-")){
+//                            componente = tokens.toString() + " guion";
+//                        } else {
+//                            componente = tokens.toString() + " guion bajo";
+//                        }
+//                        break;
                     default:
                         lexema = lexer.lexeme;
                         componente = tokens.toString();
@@ -467,6 +566,8 @@ public class Frame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnalizar;
+    private javax.swing.JButton btnArchivo;
+    private javax.swing.JButton btnArchivo1;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
