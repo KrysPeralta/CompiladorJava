@@ -34,11 +34,13 @@ public class Frame extends javax.swing.JFrame {
         
         btnArchivo.setBackground(new Color(255,255,255));
         btnLimpiar.setBackground(new Color(255,255,255));
+        btnGuardar.setBackground(new Color(255,255,255));
+        btnAnalizar.setBackground(new Color(255,255,255));
         
         tablaAnalisis.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         tablaAnalisis.getTableHeader().setOpaque(false);
         tablaAnalisis.getTableHeader().setBackground(new Color(20, 108, 148));
-        tablaAnalisis.getTableHeader().setForeground(new Color(51, 51, 51));
+        tablaAnalisis.getTableHeader().setForeground(new Color(55, 55, 55));
         tablaAnalisis.setRowHeight(25);
     }
 
@@ -56,7 +58,7 @@ public class Frame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtCadena = new javax.swing.JTextArea();
         btnAnalizar = new javax.swing.JButton();
-        btnArchivo1 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Analizador léxico");
@@ -67,24 +69,38 @@ public class Frame extends javax.swing.JFrame {
         panelPrincipal.setBackground(new java.awt.Color(204, 204, 255));
         panelPrincipal.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204)));
 
-        btnArchivo.setBackground(new java.awt.Color(204, 204, 204));
-        btnArchivo.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        btnArchivo.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnArchivo.setText("ARCHIVO");
-        btnArchivo.setToolTipText("Generar tokens, lexemas y patrones");
+        btnArchivo.setToolTipText("Importar archivo txt");
         btnArchivo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204), new java.awt.Color(51, 51, 51), new java.awt.Color(102, 102, 102)));
         btnArchivo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnArchivoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnArchivoMouseExited(evt);
+            }
+        });
         btnArchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnArchivoActionPerformed(evt);
             }
         });
 
-        btnLimpiar.setBackground(new java.awt.Color(204, 204, 204));
-        btnLimpiar.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        btnLimpiar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnLimpiar.setText("LIMPIAR");
         btnLimpiar.setToolTipText("Limpiar campo de texto y tabla");
         btnLimpiar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204), new java.awt.Color(51, 51, 51), new java.awt.Color(102, 102, 102)));
         btnLimpiar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLimpiarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLimpiarMouseExited(evt);
+            }
+        });
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
@@ -104,11 +120,11 @@ public class Frame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Token", "Lexema", "Patrón"
+                "Id", "Token", "Lexema", "Patrón"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -123,8 +139,9 @@ public class Frame extends javax.swing.JFrame {
         tablaAnalisis.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablaAnalisis);
         if (tablaAnalisis.getColumnModel().getColumnCount() > 0) {
-            tablaAnalisis.getColumnModel().getColumn(0).setPreferredWidth(30);
-            tablaAnalisis.getColumnModel().getColumn(2).setPreferredWidth(150);
+            tablaAnalisis.getColumnModel().getColumn(0).setPreferredWidth(15);
+            tablaAnalisis.getColumnModel().getColumn(1).setPreferredWidth(30);
+            tablaAnalisis.getColumnModel().getColumn(3).setPreferredWidth(150);
         }
 
         txtCadena.setColumns(20);
@@ -135,27 +152,41 @@ public class Frame extends javax.swing.JFrame {
         txtCadena.setSelectionColor(new java.awt.Color(204, 204, 255));
         jScrollPane1.setViewportView(txtCadena);
 
-        btnAnalizar.setBackground(new java.awt.Color(204, 204, 204));
-        btnAnalizar.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        btnAnalizar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnAnalizar.setText("ANALIZAR");
         btnAnalizar.setToolTipText("Generar tokens, lexemas y patrones");
         btnAnalizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204), new java.awt.Color(51, 51, 51), new java.awt.Color(102, 102, 102)));
         btnAnalizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAnalizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAnalizarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAnalizarMouseExited(evt);
+            }
+        });
         btnAnalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAnalizarActionPerformed(evt);
             }
         });
 
-        btnArchivo1.setBackground(new java.awt.Color(204, 204, 204));
-        btnArchivo1.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        btnArchivo1.setText("GUARDAR");
-        btnArchivo1.setToolTipText("Generar tokens, lexemas y patrones");
-        btnArchivo1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204), new java.awt.Color(51, 51, 51), new java.awt.Color(102, 102, 102)));
-        btnArchivo1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnArchivo1.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        btnGuardar.setText("GUARDAR");
+        btnGuardar.setToolTipText("Exportar archivo txt");
+        btnGuardar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204), new java.awt.Color(51, 51, 51), new java.awt.Color(102, 102, 102)));
+        btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseExited(evt);
+            }
+        });
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnArchivo1ActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
 
@@ -171,19 +202,19 @@ public class Frame extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                                .addComponent(btnArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(98, 98, 98)
-                                .addComponent(btnArchivo1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAnalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(122, 122, 122)
-                                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelPrincipalLayout.createSequentialGroup()
                                 .addComponent(lblTitulo1)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addComponent(btnArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(138, 138, 138)
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(144, 144, 144)
+                                .addComponent(btnAnalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(35, 35, 35))))
         );
         panelPrincipalLayout.setVerticalGroup(
@@ -193,17 +224,17 @@ public class Frame extends javax.swing.JFrame {
                 .addComponent(lblTitulo1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAnalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnArchivo1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(lblTitulo2)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -214,7 +245,9 @@ public class Frame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -262,7 +295,7 @@ public class Frame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAnalizarActionPerformed
 
-    private void btnArchivo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchivo1ActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         int seleccion = fileChooser.showSaveDialog(this);
 
@@ -281,7 +314,39 @@ public class Frame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar guardar el archivo", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }//GEN-LAST:event_btnArchivo1ActionPerformed
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnArchivoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnArchivoMouseEntered
+        btnArchivo.setBackground(new Color(204,204,204));
+    }//GEN-LAST:event_btnArchivoMouseEntered
+
+    private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered
+        btnGuardar.setBackground(new Color(204,204,204));
+    }//GEN-LAST:event_btnGuardarMouseEntered
+
+    private void btnAnalizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnalizarMouseEntered
+        btnAnalizar.setBackground(new Color(204,204,204));
+    }//GEN-LAST:event_btnAnalizarMouseEntered
+
+    private void btnLimpiarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLimpiarMouseEntered
+        btnLimpiar.setBackground(new Color(204,204,204));
+    }//GEN-LAST:event_btnLimpiarMouseEntered
+
+    private void btnArchivoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnArchivoMouseExited
+        btnArchivo.setBackground(new Color(255,255,255));
+    }//GEN-LAST:event_btnArchivoMouseExited
+
+    private void btnGuardarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseExited
+        btnGuardar.setBackground(new Color(255,255,255));
+    }//GEN-LAST:event_btnGuardarMouseExited
+
+    private void btnAnalizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnalizarMouseExited
+        btnAnalizar.setBackground(new Color(255,255,255));
+    }//GEN-LAST:event_btnAnalizarMouseExited
+
+    private void btnLimpiarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLimpiarMouseExited
+        btnLimpiar.setBackground(new Color(255,255,255));
+    }//GEN-LAST:event_btnLimpiarMouseExited
 
     //Método para vaciar la tabla
     public void vaciarTabla(JTable tabla, DefaultTableModel modelo) {
@@ -318,9 +383,10 @@ public class Frame extends javax.swing.JFrame {
             String componente;
             String lexema = "";
             String patron = "";
+            int id = 0;
             
             //Objeto para los datos
-            Object[] arreglo = new Object[3];
+            Object[] arreglo = new Object[4];
             //Modelo de la tabla
             modelo = (DefaultTableModel) tablaAnalisis.getModel();
             
@@ -331,6 +397,8 @@ public class Frame extends javax.swing.JFrame {
                     vacio = "";
                     return;
                 }
+                
+                id++;
                 
                 switch (tokens) {
                     case ERROR:
@@ -514,9 +582,10 @@ public class Frame extends javax.swing.JFrame {
                 }
                 
                 //Llenado del arreglo
-                arreglo [0] = lexema;
-                arreglo [1] = componente;
-                arreglo [2] = patron;
+                arreglo [0] = id;
+                arreglo [1] = lexema;
+                arreglo [2] = componente;
+                arreglo [3] = patron;
                 
                 //Añadir al modelo de la tabla
                 modelo.addRow(arreglo);
@@ -567,7 +636,7 @@ public class Frame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnalizar;
     private javax.swing.JButton btnArchivo;
-    private javax.swing.JButton btnArchivo1;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

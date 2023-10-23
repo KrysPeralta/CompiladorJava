@@ -29,12 +29,10 @@ Sig = [\,\'\;\.\?\¿\!\¡\#\$\-]
 
 true | false {lexeme=yytext(); return Booleano;}
 
-"establish " {Letra}({Letra}|{Digito})* ("_" {Letra}({Letra}|{Digito})*)* {lexeme=yytext().substring(10); return Variable;}
+"power on" | "switch on" | "show:" | read | check | probe | unlike | repeat | establish | 
+until | fnc | class {lexeme=yytext(); return Reservadas;}
 
-"establish" | "establish " {Letra}({Letra}|{Digito})* {lexeme=yytext().split(" ")[0]; return Reservadas;}
-
-"power on" | "switch on" | "show:" | read | check | probe | unlike | repeat | 
-until {lexeme=yytext(); return Reservadas;}
+{Letra}({Letra}|{Digito})* ("_" {Letra}({Letra}|{Digito})*)* {lexeme=yytext(); return Variable;}
 
 {Op} {lexeme=yytext(); return Operador;}
 
